@@ -4,8 +4,8 @@
 
 using System;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 // ReSharper disable InconsistentNaming
 
@@ -23,7 +23,7 @@ namespace WoW.DirectX
         {
         }
 
-        IntPtr _swapChain;
+        private IntPtr _swapChain;
         private IntPtr _device;
 
         private IntPtr _myDxgiDll;
@@ -37,14 +37,14 @@ namespace WoW.DirectX
         {
             LoadDxgiDll();
             var scd = new SwapChainDescription
-                          {
-                                               BufferCount = 1,
-                                               ModeDescription = new ModeDescription{ Format = DXGI_FORMAT_R8G8B8A8_UNORM},
-                                               Usage = DXGI_USAGE_RENDER_TARGET_OUTPUT,
-                                               OutputHandle = Form.Handle,
-                                               SampleDescription = new SampleDescription{Count = 1},
-                                               IsWindowed = true
-                                           };
+            {
+                BufferCount = 1,
+                ModeDescription = new ModeDescription { Format = DXGI_FORMAT_R8G8B8A8_UNORM },
+                Usage = DXGI_USAGE_RENDER_TARGET_OUTPUT,
+                OutputHandle = Form.Handle,
+                SampleDescription = new SampleDescription { Count = 1 },
+                IsWindowed = true
+            };
 
             unsafe
             {
@@ -146,8 +146,10 @@ namespace WoW.DirectX
             public int Usage;
             public int BufferCount;
             public IntPtr OutputHandle;
+
             [MarshalAs(UnmanagedType.Bool)]
             public bool IsWindowed;
+
             public int SwapEffect;
             public int Flags;
         }
@@ -164,10 +166,9 @@ namespace WoW.DirectX
             public const int D3D11DeviceContextEnd = 0x1C;
         }
 
-
 #pragma warning restore 169
 
-        #endregion
+        #endregion Embedded Types
 
         [DllImport("d3d11.dll")]
         private static extern unsafe int D3D11CreateDeviceAndSwapChain(void* pAdapter, int driverType, void* Software,

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using GreyMagic;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Threading;
-using GreyMagic;
 using WoW.DirectX;
+
 // ReSharper disable CheckNamespace
 
 namespace FishBot3._3._5a
@@ -20,6 +21,7 @@ namespace FishBot3._3._5a
 
         // Addresse Inection code:
         private readonly object _executeLockObject = new object();
+
         private readonly Process _wowProcess;
         private IntPtr _addresseInjection;
         private byte[] _endSceneOriginalBytes;
@@ -162,7 +164,7 @@ namespace FishBot3._3._5a
                     }
                     else
                     {
-                        // This is on my pc may be different on others                 
+                        // This is on my pc may be different on others
 
                         if (UsingWin8 && !_dx3D.UsingDirectX11)
                         {
@@ -251,7 +253,7 @@ namespace FishBot3._3._5a
                 }
                 finally
                 {
-                    // Free memory allocated 
+                    // Free memory allocated
                     // schedule resources to be freed at a later date cause freeing it immediately was causing wow crashes
                     new Timer(state => Memory.FreeMemory((IntPtr)state), injectionAsmCodecave, 100, 0);
                 }
@@ -338,6 +340,7 @@ namespace FishBot3._3._5a
                     else Memory.Asm.Add("Nop\nNop\n");
                     Memory.Asm.AddLine("Jmp " + ((uint)_fixHBStub - (uint)pEndScene));
                     break;
+
                 case 1:
                     if (Utility.Rand.Next(2) == 1) InsertRandomMov();
                     else Memory.Asm.Add("Nop\nNop\n");

@@ -25,7 +25,7 @@ namespace FishBot3._3._5a
             Configured = 0x40,
         }
 
-        #endregion
+        #endregion ConnectionStates enum
 
         #region Protection enum
 
@@ -44,7 +44,7 @@ namespace FishBot3._3._5a
             PageWritecombine = 0x400
         }
 
-        #endregion
+        #endregion Protection enum
 
         #region EnumWindows
 
@@ -58,7 +58,7 @@ namespace FishBot3._3._5a
         /// <returns> True to continue enumerating, false to bail. </returns>
         public delegate bool EnumWindowProc(IntPtr hWnd, IntPtr parameter);
 
-        #endregion
+        #endregion Delegates
 
         [SuppressUnmanagedCodeSecurity, DllImport("kernel32")]
         public static extern IntPtr LoadLibrary(string libraryName);
@@ -132,7 +132,7 @@ namespace FishBot3._3._5a
             return true;
         }
 
-        #endregion
+        #endregion EnumWindows
 
         #region SetWindowPosFlags enum
 
@@ -214,10 +214,11 @@ namespace FishBot3._3._5a
             ///   Displays the window.
             /// </summary>
             SWP_SHOWWINDOW = 0x0040,
+
             // ReSharper restore InconsistentNaming
         }
 
-        #endregion
+        #endregion SetWindowPosFlags enum
 
         public const int MaxPath = 260;
         public const int MaxAlternate = 14;
@@ -299,7 +300,7 @@ namespace FishBot3._3._5a
             public uint dwHighDateTime;
         };
 
-        #endregion
+        #endregion Nested Type: FILETIME
 
         #region Nested Type: Rect
 
@@ -312,7 +313,7 @@ namespace FishBot3._3._5a
             public int Bottom; // y position of lower-right corner
         }
 
-        #endregion
+        #endregion Nested Type: Rect
 
         #region Nested Type: WIN32_FIND_DATA
 
@@ -327,13 +328,15 @@ namespace FishBot3._3._5a
             public uint nFileSizeLow; //| http://www.pinvoke.net/default.aspx/Structures/WIN32_FIND_DATA.html
             public uint dwReserved0; //|
             public uint dwReserved1; //v
+
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)]
             public string cFileName;
+
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxAlternate)]
             public string cAlternate;
         }
 
-        #endregion
+        #endregion Nested Type: WIN32_FIND_DATA
 
         #region Nested Type: ShowWndowCommands
 
@@ -358,6 +361,7 @@ namespace FishBot3._3._5a
             ///   Maximizes the specified window.
             /// </summary>
             Maximize = 3, // is this the right value?
+
             /// <summary>
             ///   Activates the window and displays it as a maximized window.
             /// </summary>
@@ -405,6 +409,6 @@ namespace FishBot3._3._5a
             ForceMinimize = 11
         }
 
-        #endregion
+        #endregion Nested Type: ShowWndowCommands
     }
 }

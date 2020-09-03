@@ -4,19 +4,18 @@
 
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace WoW.DirectX
 {
     // ReSharper disable InconsistentNaming
-    sealed class D3D9Device : D3DDevice
+    internal sealed class D3D9Device : D3DDevice
     {
         private const int D3D9SdkVersion = 0x20;
         private const int D3DCREATE_SOFTWARE_VERTEXPROCESSING = 0x20;
 
-        private  VTableFuncDelegate _d3DDeviceRelease;
-        private  VTableFuncDelegate _d3DRelease;
+        private VTableFuncDelegate _d3DDeviceRelease;
+        private VTableFuncDelegate _d3DRelease;
 
         public D3D9Device(Process targetProc)
             : base(targetProc, "d3d9.dll")
@@ -73,10 +72,8 @@ namespace WoW.DirectX
             get { return VTableIndexes.Direct3DDevice9Present; }
         }
 
-
         [DllImport("d3d9.dll")]
         internal static extern IntPtr Direct3DCreate9(uint sdkVersion);
-
 
         #region Embedded Types
 
@@ -101,16 +98,18 @@ namespace WoW.DirectX
             public readonly uint MultiSampleQuality;
             public uint SwapEffect;
             public readonly IntPtr hDeviceWindow;
+
             [MarshalAs(UnmanagedType.Bool)]
             public bool Windowed;
+
             [MarshalAs(UnmanagedType.Bool)]
             public readonly bool EnableAutoDepthStencil;
+
             public readonly uint AutoDepthStencilFormat;
             public readonly uint Flags;
             public readonly uint FullScreen_RefreshRateInHz;
             public readonly uint PresentationInterval;
         }
-
 
         public struct VTableIndexes
         {
@@ -124,7 +123,9 @@ namespace WoW.DirectX
             public const int Direct3DDevice9EndScene = 0x2A;
             public const int Direct3DDevice9Clear = 0x2B;
         }
-        #endregion
+
+        #endregion Embedded Types
     }
+
     // ReSharper restore InconsistentNaming
 }

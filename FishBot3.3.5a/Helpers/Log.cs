@@ -9,10 +9,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Media;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace FishBot3._3._5a
@@ -255,7 +255,6 @@ namespace FishBot3._3._5a
             }
             catch
             {
-
             }
             lastMessage = text;
         }

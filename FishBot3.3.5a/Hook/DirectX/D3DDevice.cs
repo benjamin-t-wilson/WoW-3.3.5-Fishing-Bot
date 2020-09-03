@@ -36,6 +36,7 @@ namespace WoW.DirectX
         }
 
         private List<IntPtr> _loadedLibraries = new List<IntPtr>();
+
         protected D3DDevice(Process targetProcess, string d3DDllName)
         {
             TargetProcess = targetProcess;
@@ -44,11 +45,12 @@ namespace WoW.DirectX
             LoadDll();
             InitD3D(out D3DDevicePtr);
         }
+
         /// <summary>
         /// initiializes d3d and sets device pointer.
         /// </summary>
-        protected abstract void InitD3D(out IntPtr d3DDevicePtr); 
-        
+        protected abstract void InitD3D(out IntPtr d3DDevicePtr);
+
         /// <summary>
         /// Cleanup ))
         /// </summary>
@@ -80,7 +82,6 @@ namespace WoW.DirectX
             return ret;
         }
 
-
         protected unsafe IntPtr GetVTableFuncAddress(IntPtr obj, int funcIndex)
         {
             IntPtr pointer = *(IntPtr*)((void*)obj);
@@ -101,6 +102,7 @@ namespace WoW.DirectX
         }
 
         #region IDisposable Pattern Implementation
+
         private bool _disposed;
 
         public void Dispose()
@@ -132,7 +134,8 @@ namespace WoW.DirectX
         {
             Dispose(false);
         }
-        #endregion
+
+        #endregion IDisposable Pattern Implementation
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         protected delegate void VTableFuncDelegate(IntPtr instance);
