@@ -24,4 +24,4 @@ The application intercepts memory created / used by the WoW.exe system process i
 - Add an interface to select which items should be removed from the inventory
 - Run the inventory check / clean every few fish
 - Stop bot when inventory is full
-- Remove unrelated bot features, there's some buttons with nothing to do with fishing
+- ~Remove unrelated bot features, there's some buttons with nothing to do with fishing~
