@@ -106,3 +106,4 @@ venv.bak/
 .mypy_cache/
 
 .vs
+FishBot3.3.5a/bin/Debug/Logs

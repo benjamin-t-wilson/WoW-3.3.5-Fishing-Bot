@@ -187,7 +187,7 @@ namespace FishBot3._3._5a
             }
             catch (Exception ex)
             {
-                Log.Write(ex.ToString());
+                Log.Write(ex.ToString(), Color.Black);
             }
         }
 
@@ -248,7 +248,7 @@ namespace FishBot3._3._5a
                 {
                     if (!ex.Message.StartsWith("Could not read bytes from"))
                     {
-                        Log.Write(ex.ToString());
+                        Log.Write(ex.ToString(), Color.Black);
                     }
                 }
                 finally
@@ -290,13 +290,6 @@ namespace FishBot3._3._5a
         {
             var ranNum = Utility.Rand.Next(0, RegisterNames.Length);
             Memory.Asm.AddLine("mov {0}, {1}", RegisterNames[ranNum], RegisterNames[ranNum]);
-        }
-
-        private void InsertRandomPushPop()
-        {
-            var ranNum = Utility.Rand.Next(0, Register32BitNames.Length);
-            Memory.Asm.AddLine("push {0}", Register32BitNames[ranNum]);
-            Memory.Asm.AddLine("pop {0}", Register32BitNames[ranNum]);
         }
 
         private void FixEndSceneForHB(IntPtr pEndScene)

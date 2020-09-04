@@ -67,46 +67,6 @@ namespace FishBot3._3._5a
             Initialized = true;
         }
 
-        private static void LogActivityWithoutLineFeedOrTime(string activity, Color c, bool noSound = false)
-        {
-            _parent.Invoke(
-                new Action(() =>
-                {
-                    InternalWrite(c, activity, true, false, noSound);
-                    WriteDirectlyToLogFile(activity);
-                }));
-        }
-
-        public static void Clear()
-        {
-            _rtbLogWindow.Clear();
-        }
-
-        public static void WriteNoTime(string activity)
-        {
-            _parent.Invoke(
-                new Action(() =>
-                {
-                    InternalWrite(Color.Black, activity, true);
-                    WriteDirectlyToLogFile(activity);
-                }));
-        }
-
-        public static void WriteNoTime(string activity, Color c)
-        {
-            _parent.Invoke(
-                new Action(() =>
-                {
-                    InternalWrite(c, activity, true);
-                    WriteDirectlyToLogFile(activity);
-                }));
-        }
-
-        //public static void NewLine()
-        //{
-        //    LogActivity(" ", Color.Black);
-        //}
-
         private static void LogActivity(string activity, Color c)
         {
             if (!Initialized)
@@ -125,34 +85,6 @@ namespace FishBot3._3._5a
                 else
                 {
                     Write(activity, c);
-                }
-
-                Application.DoEvents();
-            }
-            catch (Exception execp)
-            {
-                LogActivity("Exception in LogActivity function\r\nError: " + execp.Message, _errorColor);
-            }
-        }
-
-        public static void LogActivity(string activity)
-        {
-            if (!Initialized)
-                return;
-
-            try
-            {
-                if (activity == string.Empty)
-                {
-                    DrawHorizontalLine();
-                }
-                else if (activity.Trim() == string.Empty)
-                {
-                    WriteNewLine();
-                }
-                else
-                {
-                    Write(activity, Color.Black);
                 }
 
                 Application.DoEvents();
@@ -188,47 +120,6 @@ namespace FishBot3._3._5a
                     LogActivity("Failed to write to log file [1] - " + ex.Message, Color.Red);
                 }
             }
-        }
-
-        public static void Write(string text)
-        {
-            //if (text == lastMessage) // We want to avoid spamming, so we dont display duplicate messages
-            //{
-            //    return;
-            //}
-
-            Write(text, Color.Black);
-
-            //lastMessage = text;
-        }
-
-        internal static void WritePixelMagic(string text, Color c)
-        {
-            char[] delimiterChars = { ' ', ',', '.', ':', '\t' };
-            var words = text.Split(delimiterChars);
-
-            foreach (var s in words)
-            {
-                if (s == "PixelMagic")
-                {
-                    LogActivityWithoutLineFeedOrTime("P", Color.Red, true);
-                    LogActivityWithoutLineFeedOrTime("i", Color.Green, true);
-                    LogActivityWithoutLineFeedOrTime("x", Color.Blue, true);
-                    LogActivityWithoutLineFeedOrTime("e", Color.Indigo, true);
-                    LogActivityWithoutLineFeedOrTime("l", Color.Red, true);
-                    LogActivityWithoutLineFeedOrTime("M", Color.Green, true);
-                    LogActivityWithoutLineFeedOrTime("a", Color.Blue, true);
-                    LogActivityWithoutLineFeedOrTime("g", Color.Indigo, true);
-                    LogActivityWithoutLineFeedOrTime("i", Color.Red, true);
-                    LogActivityWithoutLineFeedOrTime("c ", Color.Green, true);
-                }
-                else
-                {
-                    LogActivityWithoutLineFeedOrTime(s + " ", c);
-                }
-            }
-
-            LogActivityWithoutLineFeedOrTime(Environment.NewLine, Color.Black);
         }
 
         public static void Write(string text, Color c)

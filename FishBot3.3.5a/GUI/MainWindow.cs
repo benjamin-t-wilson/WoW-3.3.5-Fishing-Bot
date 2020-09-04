@@ -76,6 +76,9 @@ namespace FishBot3._3._5a
 
         private void MainWindow_Shown(object sender = null, EventArgs e = null)
         {
+            Log.Write("Make sure to run program as administrator", Color.Crimson);
+            Log.Write("Turn off auto-loot for power fishing, or turn on auto loot to gather fish", Color.Crimson);
+
             try
             {
                 Log.Write("Attempting to connect to running WoW.exe process...", Color.Black);
@@ -108,8 +111,6 @@ namespace FishBot3._3._5a
 
                 FirstObj = curObj;
 
-                //Log("First object located @ memory location 0x" + FirstObj.ToString("X"), Color.Black);
-
                 lua.DoString("zoneData = GetZoneText()");
                 // Thread.Sleep(100);
                 Log.Write("Zone: " + lua.GetLocalizedText("zoneData"), Color.Black);
@@ -119,33 +120,6 @@ namespace FishBot3._3._5a
                 playerbase = wowHook.Memory.Read<IntPtr>(
                     wowHook.Memory.Read<IntPtr>(
                         wowHook.Memory.Read<IntPtr>(PlayerBase) + 0x34) + 0x24);
-
-                //var x = wowHook.Memory.Read<float>(playerbase + 0x798);
-                //var y = wowHook.Memory.Read<float>(playerbase + 0x79C);
-                //var z = wowHook.Memory.Read<float>(playerbase + 0x7A0);
-
-                //lua.ctm(5734.542f, 510.5383f, 647.4522f, 0, 4, 1.0f, playerbase);
-                //lua.ctm(x, y, z, 0xF130000FEB01CD9F, 4, 1.0f, playerbase);
-
-                //                public enum ClickToMoveType : uint
-                //{
-                //    FaceTarget = 0x1,
-                //    Face = 0x2,
-                //    Stop_ThrowsException = 0x3,
-                //    Move = 0x4,
-                //    NpcInteract = 0x5,
-                //    Loot = 0x6,
-                //    ObjInteract = 0x7,
-                //    FaceOther = 0x8,
-                //    Skin = 0x9,
-                //    AttackPosition = 0xA,
-                //    AttackGuid = 0xB,
-                //    ConstantFace = 0xC,
-                //    None = 0xD,
-
-                //    Attack = 0x10,
-                //    Idle = 0x13,
-                //}
 
                 Log.Write("Click 'Fish' to begin fishing.", Color.Green);
             }
@@ -166,8 +140,6 @@ namespace FishBot3._3._5a
 
             cmdStop.Enabled = true;
             cmdFish.Enabled = false;
-
-            SystemSounds.Asterisk.Play();
 
             Fish = !Fish;
 
@@ -210,8 +182,6 @@ namespace FishBot3._3._5a
 
                             if (objectName == "Fishing Bobber")
                             {
-                                // /run for bag=0,4,1 do for slot=1,36,1 do local name=GetContainerItemLink(bag,slot);if (name and string.find(name,"Partially Rusted File")) then PickupContainerItem(bag,slot);DeleteCursorItem();end;end;end
-
                                 var bobberState = wowHook.Memory.Read<byte>(curObj + 0xBC);
 
                                 if (bobberState == 1) // Fish has been caught
@@ -236,18 +206,6 @@ namespace FishBot3._3._5a
                                     lastBobberGuid.Add(cGUID);
 
                                     Thread.Sleep(200);
-
-                                    // BEN WAS HERE
-                                    //if (Caught == 10)
-                                    //{
-                                    //    Log.Write("Dont worry this only happens @ 10 fish, i thought it would be a nice change", Color.Green);
-
-                                    //    lua.DoString("SendChatMessage(\"Tired of fishing... taking a nap for a while...\", \"EMOTE\", nil, \"General\")");
-                                    //    lua.DoString("DoEmote('sleep')");
-                                    //    Thread.Sleep(10000);
-                                    //    lua.DoString("JumpOrAscendStart()");
-                                    //    Thread.Sleep(1000);
-                                    //}
 
                                     break;
                                 }
@@ -281,75 +239,6 @@ namespace FishBot3._3._5a
 
             SystemSounds.Asterisk.Play();
             Fish = false;
-        }
-
-        private void cmdRotation_Click(object sender, EventArgs e)
-        {
-            while (wowHook.Memory.Read<ulong>(Offsets.TargetGUID) != 0)
-            {
-                lua.CastSpellByName("Icy Touch");
-                lua.CastSpellByName("Plague Strike");
-                lua.CastSpellByName("Heart Strike");
-                lua.CastSpellByName("Death Strike");
-                lua.CastSpellByName("Death Coil");
-
-                Thread.Sleep(100);
-                Application.DoEvents();
-            }
-        }
-
-        [SuppressMessage("ReSharper", "FunctionNeverReturns")]
-        private void cmdFollow_Click(object sender, EventArgs e)
-        {
-            while (true)
-            {
-                try
-                {
-                    Application.DoEvents();
-
-                    Thread.Sleep(200);
-
-                    var curObj = FirstObj;
-
-                    while (curObj.ToInt64() != 0 && (curObj.ToInt64() & 1) == 0)
-                    {
-                        var type = wowHook.Memory.Read<int>(curObj + 0x14);
-                        var cGUID = wowHook.Memory.Read<ulong>(curObj + 0x30);
-
-                        if (type == 3) // NPC  (4 == player) (5 == Object)
-                        {
-                            if (cGUID == wowHook.Memory.Read<ulong>(Offsets.TargetGUID))
-                            {
-                                var myx = wowHook.Memory.Read<float>(playerbase + 0x798);
-                                var myy = wowHook.Memory.Read<float>(playerbase + 0x79C);
-                                var myz = wowHook.Memory.Read<float>(playerbase + 0x7A0);
-
-                                var px = wowHook.Memory.Read<float>(curObj + 0x798);
-                                var py = wowHook.Memory.Read<float>(curObj + 0x79C);
-                                var pz = wowHook.Memory.Read<float>(curObj + 0x7A0);
-
-                                if ((Math.Abs(Math.Abs(px) - Math.Abs(myx)) > 5) ||
-                                    (Math.Abs(Math.Abs(py) - Math.Abs(myy)) > 5) ||
-                                    (Math.Abs(Math.Abs(pz) - Math.Abs(myz)) > 5))
-                                {
-                                    lua.ctm(px, py, pz, 0, 4, 1.0f, playerbase);
-
-                                    Log.Write("Moving to " + px + ", " + py + ", " + pz);
-                                }
-                            }
-                        }
-
-                        var nextObj = wowHook.Memory.Read<IntPtr>(IntPtr.Add(curObj, (int)Offsets.NextObjectOffset));
-                        if (nextObj == curObj)
-                            break;
-                        curObj = nextObj;
-                    }
-                }
-                catch (Exception)
-                {
-                    // ignored
-                }
-            }
         }
     }
 }

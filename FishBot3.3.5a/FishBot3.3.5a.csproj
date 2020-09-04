@@ -133,8 +133,6 @@
   <ItemGroup>
     <Content Include="Fishy.ico" />
     <Content Include="FodyWeavers.xml" />
-    <Content Include="Libs\fasmdll_managed.dll" />
-    <Content Include="Libs\GreyMagic.dll" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

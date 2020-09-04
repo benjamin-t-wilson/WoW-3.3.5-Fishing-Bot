@@ -74,26 +74,8 @@ namespace FishBot3._3._5a
             return "WoW Hook not installed";
         }
 
-        public void SendTextMessage(string message)
-        {
-            //DoString(string.Format("SendChatMessage(\"" + message + "\", \"EMOTE\", nil, \"General\")"));
-
-            DoString("RunMacroText('/me " + message + "')");
-        }
-
         public void CastSpellByName(string spell)
         {
-            var debuff = 0.0; // Spell must be cast
-
-            // Check if the spell must be cast because its debuff has worn off
-            if (spell == "Icy Touch")
-            {
-                debuff = DebuffRemainingTime("Frost Fever");
-            }
-
-            if (debuff > 0.5)
-                return;
-
             // Check if spell is ready, if not skip this spell
             DoString("start, duration, enabled = GetSpellCooldown('" + spell + "')");
             var result = GetLocalizedText("duration");
@@ -102,72 +84,6 @@ namespace FishBot3._3._5a
                 return;
 
             DoString(string.Format("CastSpellByName('{0}')", spell));
-            // BEN WAS HERE
-            //SendTextMessage("Casting: " + spell);
-        }
-
-        public double DebuffRemainingTime(string debuffName)
-        {
-            var luaStr = string.Format("name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura('target','{0}',nil,'HARMFUL')", debuffName);
-            DoString(luaStr);
-            var result = GetLocalizedText("expirationTime");
-
-            if (result == "")
-                return 0;
-
-            DoString("time = GetTime()");
-            var currentTime = GetLocalizedText("time");
-
-            double timeInSeconds = double.Parse(result) - double.Parse(currentTime);
-
-            if (timeInSeconds < 0)
-                return 0;
-
-            return timeInSeconds;
-        }
-
-        public void ctm(float x, float y, float z, ulong guid, int action, float precision, IntPtr playerBaseAddress)
-        {
-            // Offset:
-            uint CGPlayer_C__ClickToMove = 0x727400;
-
-            // Allocate Memory:
-            IntPtr GetNameVMT_Codecave = _wowHook.Memory.AllocateMemory(0x3332);
-            IntPtr Pos_Codecave = _wowHook.Memory.AllocateMemory(0x4 * 3);
-            IntPtr GUID_Codecave = _wowHook.Memory.AllocateMemory(0x8);
-            IntPtr Angle_Codecave = _wowHook.Memory.AllocateMemory(0x4);
-
-            // Write value:
-            _wowHook.Memory.Write<UInt64>(GUID_Codecave, guid);
-            _wowHook.Memory.Write<float>(Angle_Codecave, precision);
-            _wowHook.Memory.Write<float>(Pos_Codecave, x);
-            _wowHook.Memory.Write<float>(Pos_Codecave + 0x4, y);
-            _wowHook.Memory.Write<float>(Pos_Codecave + 0x8, z);
-
-            try
-            {
-                // BOOL __thiscall CGPlayer_C__ClickToMove(WoWActivePlayer *this, CLICKTOMOVETYPE clickType, WGUID *interactGuid, WOWPOS *clickPos, float precision)
-                _wowHook.Memory.Asm.Clear();
-
-                _wowHook.Memory.Asm.AddLine("mov edx, [" + Angle_Codecave + "]");
-                _wowHook.Memory.Asm.AddLine("push edx");
-
-                _wowHook.Memory.Asm.AddLine("push " + Pos_Codecave);
-                _wowHook.Memory.Asm.AddLine("push " + GUID_Codecave);
-                _wowHook.Memory.Asm.AddLine("push " + action);
-
-                _wowHook.Memory.Asm.AddLine("mov ecx, " + playerBaseAddress);
-                _wowHook.Memory.Asm.AddLine("call " + CGPlayer_C__ClickToMove);
-                _wowHook.Memory.Asm.AddLine("retn");
-
-                _wowHook.Memory.Asm.InjectAndExecute((uint)GetNameVMT_Codecave);
-            }
-            catch { }
-
-            _wowHook.Memory.FreeMemory(GetNameVMT_Codecave);
-            _wowHook.Memory.FreeMemory(Pos_Codecave);
-            _wowHook.Memory.FreeMemory(GUID_Codecave);
-            _wowHook.Memory.FreeMemory(Angle_Codecave);
         }
     }
 }

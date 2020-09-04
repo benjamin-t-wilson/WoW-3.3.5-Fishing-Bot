@@ -36,8 +36,6 @@
             this.cmdStop = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.cmdFollow = new System.Windows.Forms.Button();
-            this.cmdRotation = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -111,26 +109,6 @@
             this.textBox2.TabIndex = 5;
             this.textBox2.Text = "0";
             // 
-            // cmdFollow
-            // 
-            this.cmdFollow.Location = new System.Drawing.Point(547, 5);
-            this.cmdFollow.Name = "cmdFollow";
-            this.cmdFollow.Size = new System.Drawing.Size(79, 25);
-            this.cmdFollow.TabIndex = 7;
-            this.cmdFollow.Text = "Follow Target";
-            this.cmdFollow.UseVisualStyleBackColor = true;
-            this.cmdFollow.Click += new System.EventHandler(this.cmdFollow_Click);
-            // 
-            // cmdRotation
-            // 
-            this.cmdRotation.Location = new System.Drawing.Point(632, 5);
-            this.cmdRotation.Name = "cmdRotation";
-            this.cmdRotation.Size = new System.Drawing.Size(79, 25);
-            this.cmdRotation.TabIndex = 8;
-            this.cmdRotation.Text = "Rotation (DK)";
-            this.cmdRotation.UseVisualStyleBackColor = true;
-            this.cmdRotation.Click += new System.EventHandler(this.cmdRotation_Click);
-            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -179,8 +157,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(717, 491);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.cmdRotation);
-            this.Controls.Add(this.cmdFollow);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.cmdStop);
@@ -209,8 +185,6 @@
         private System.Windows.Forms.Button cmdStop;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button cmdFollow;
-        private System.Windows.Forms.Button cmdRotation;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;

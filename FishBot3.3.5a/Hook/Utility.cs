@@ -29,16 +29,5 @@ namespace FishBot3._3._5a
             return Environment.Is64BitOperatingSystem &&
                    !(NativeMethods.IsWow64Process(proc.Handle, out retVal) && retVal);
         }
-
-        // returns base offset for main module
-        public static uint BaseOffset(this Process proc)
-        {
-            return (uint)proc.MainModule.BaseAddress.ToInt32();
-        }
-
-        public static string VersionString(this Process proc)
-        {
-            return proc.MainModule.FileVersionInfo.FileVersion;
-        }
     }
 }
