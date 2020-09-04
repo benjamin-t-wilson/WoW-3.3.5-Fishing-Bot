@@ -1,3 +1,4 @@
+
 # World of Warcraft - 3.3.5 - Fishing Bot
 
 This is a light fishing bot application that I picked up from the [WoW Devs](https://github.com/WowDevs/Fishbot-3.3.5) GitHub. Their project was last contributed to 4 years ago from the time of me writing this, and is no longer working. It is my goal to breathe some life back into it, clean it up, refactor, and otherwise make it meet modern and personal code standards. As of this repo's init, the project is working.
@@ -6,7 +7,7 @@ Botting is against Blizzard terms and conditions, and will result in your accoun
 
 ### Technologies --
 
-This project is written wholly in C#, using the GrayMagic and FASM packages. Check out my other repos for the exact situation and setup used.
+This project is written wholly in C#, using the [GrayMagic and FASM packages](https://github.com/benjamin-t-wilson/GreyMagic).
 
 ### Launch --
 
