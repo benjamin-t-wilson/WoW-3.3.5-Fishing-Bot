@@ -240,5 +240,50 @@ namespace FishBot3._3._5a
             SystemSounds.Asterisk.Play();
             Fish = false;
         }
+
+        private void keptItems_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void keptToDropButton_Click(object sender, EventArgs e)
+        {
+            dropItems.Items.Add(keptItems.SelectedItem);
+
+            List<string> temp = new List<string>();
+
+            foreach (string item in keptItems.Items)
+            {
+                if (item.Contains(keptItems.SelectedItem.ToString()))
+                {
+                    temp.Add(item);
+                }
+            }
+
+            foreach (string item in temp)
+            {
+                keptItems.Items.Remove(item);
+            }
+        }
+
+        private void dropToKeptButton_Click(object sender, EventArgs e)
+        {
+            keptItems.Items.Add(dropItems.SelectedItem);
+
+            List<string> temp = new List<string>();
+
+            foreach (string item in dropItems.Items)
+            {
+                if (item.Contains(dropItems.SelectedItem.ToString()))
+                {
+                    temp.Add(item);
+                }
+            }
+
+            foreach (string item in temp)
+            {
+                dropItems.Items.Remove(item);
+            }
+        }
     }
 }
