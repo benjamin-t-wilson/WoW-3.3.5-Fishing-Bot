@@ -20,7 +20,7 @@ The application intercepts memory created / used by the WoW.exe system process i
 - Look for classes that are agnostic to bot functionality and make them their own project ( ex. WowHook )
 - Create repos for each level of the project
 - Change excessive use of raw strings into constants
-- Add a list of all items gatherable via fishing by name and level
+- ~Add a list of all items gatherable via fishing by name and level~ Didn't do level, oops.
 - Add an interface to select which items should be removed from the inventory
 - Run the inventory check / clean every few fish
 - Stop bot when inventory is full
