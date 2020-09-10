@@ -22,6 +22,8 @@ The application intercepts memory created / used by the WoW.exe system process i
 - Change excessive use of raw strings into constants
 - ~Add a list of all items gatherable via fishing by name and level~ Didn't do level, oops.
 - ~Add an interface to select which items should be removed from the inventory~ Interface has been added, does not affect functionality yet
-- Run the inventory check / clean every few fish
-- Stop bot when inventory is full
+- ~Run the inventory check / clean every few fish~ Runs when there are 0 slots remaining
+- ~Stop bot when inventory is full~ Part of above solution
+- Add interfaces for uses to add in bag slot numbers to check them instead of just inventory bag
+- Make the bot not stop responding when clearing inventory ( it always comes back, I am honestly not sure what the problem is though )
 - ~Remove unrelated bot features, there's some buttons with nothing to do with fishing~
