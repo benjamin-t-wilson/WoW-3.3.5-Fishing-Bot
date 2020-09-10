@@ -149,6 +149,40 @@ namespace FishBot3._3._5a
                 {
                     Application.DoEvents();
 
+                    if (GetInventorySlotsLeft == 0)
+                    {
+                        Log.Write("Clearing out inventory slots...", Color.Black);
+
+                        var invFull = true;
+
+                        foreach (var item in dropItems.Items)
+                        {
+                            var bagId = 0;
+                            for (var slotId = 0; slotId <= 16; slotId++)
+                            {
+                                lua.DoString($"itemLink=GetContainerItemLink({bagId},{slotId})");
+                                Thread.Sleep(1000);
+                                if (lua.GetLocalizedText("itemLink").Contains(item.ToString()))
+                                {
+                                    invFull = false;
+                                    lua.DoString($"PickupContainerItem({bagId},{slotId})");
+                                    Thread.Sleep(1000);
+                                    lua.DoString($"DeleteCursorItem()");
+                                    Thread.Sleep(1000);
+                                }
+                            }
+                        }
+
+                        if (invFull)
+                        {
+                            cmdStop.Enabled = false;
+                            cmdFish.Enabled = true;
+
+                            SystemSounds.Asterisk.Play();
+                            Fish = false;
+                        }
+                    }
+
                     if (!IsFishing)
                     {
                         Log.Write("Fishing...", Color.Black);
@@ -190,12 +224,6 @@ namespace FishBot3._3._5a
                                     textBox2.Text = Caught.ToString();
 
                                     Log.Write("Caught something, hopefully a fish!", Color.Black);
-
-                                    // Check if we have inventory space for the fish, if not delete item "Partially Rusted File" which likes to waste space in bags
-                                    if (GetInventorySlotsLeft == 0)
-                                    {
-                                        lua.DoString("RunMacroText(\"run for bag=0,4,1 do for slot=1,36,1 do local name=GetContainerItemLink(bag,slot);if (name and string.find(name,\"Partially Rusted File\")) then PickupContainerItem(bag,slot);DeleteCursorItem();end;end;end\")");
-                                    }
 
                                     var MouseOverGUID = new IntPtr(0x00BD07A0);
                                     wowHook.Memory.Write(MouseOverGUID, cGUID);
